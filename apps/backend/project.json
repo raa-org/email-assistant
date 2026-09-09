@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/src",
+  "projectType": "application",
+  "implicitDependencies": [
+    "common"
+  ],
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nodemon --watch apps/backend/src --watch libs/common/src --watch .env --ext ts --signal SIGTERM --exec \"tsc -p apps/backend/tsconfig.app.json && node dist/apps/backend/apps/backend/src/main.js\""
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/backend/tsconfig.app.json"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/backend/tsconfig.app.json --noEmit"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "TSX_TSCONFIG_PATH=apps/backend/tsconfig.app.json node --test --import tsx \"apps/backend/test/**/*.spec.ts\""
+      }
+    }
+  }
+}
